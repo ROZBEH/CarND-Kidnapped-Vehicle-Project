@@ -30,7 +30,7 @@ I. First thing first, initialization of the particles happens. 100 was choosen a
 </br>
 
 
-II. Once the particle is initialized, the weights of each particle gets updated. Depending on house close each particle is to the actual landmark observation that was made by the car, that particle gets the higher weight. Using weights of these particles we update the particle filter in such a way that particles with higher chance of being picked up as the actual location of the vehicle. Particles with lower weight have a slight chance of being picked up and they basically become discarded.
+II. Once the particle is initialized, weights of each particle gets updated. Depending on how close each particle is to the actual landmark observation that was made by the car, that particle gets the higher weight. Using weights of these particles we update the particle filter in such a way that particles with higher chance of being picked up as the actual location of the vehicle. Particles with lower weight have a slight chance of being picked up and they basically become discarded.
 
 
 </br>
