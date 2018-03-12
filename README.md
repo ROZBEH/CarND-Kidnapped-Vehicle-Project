@@ -35,10 +35,9 @@ II. Once the particle is initialized, weights of each particle gets updated. Dep
 
 </br>
 
-III. One of the steps that is necessary during weight update is data association. We want to know which of the observations is closest to the our predicted landmarks.
+III. One of the steps that is necessary during weight update is data association. We want to know which of the observations is closest to the our predicted landmarks. Code snippet is shown down here!
 </br>
-'''cpp
-	
+```cpp
 	default_random_engine gen;
 	normal_distribution<double> dist_x(0, std_pos[0]);
     normal_distribution<double> dist_y(0, std_pos[1]);
@@ -56,8 +55,7 @@ III. One of the steps that is necessary during weight update is data association
 	    	particles[i].theta += dist_theta(gen) + yaw_rate*delta_t;
 	    		}
 	    }
-	    
-'''
+```
 
 
 </br>
