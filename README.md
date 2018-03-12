@@ -36,6 +36,9 @@ II. Once the particle is initialized, weights of each particle gets updated. Dep
 </br>
 
 III. One of the steps that is necessary during weight update is data association. We want to know which of the observations is closest to the our predicted landmarks. Code snippet is shown down here!
+
+
+IV. During the prediction stage, we estimate the location (x, y, theta) of the vehicle based on the current measurements (velocity and yaw rate!)
 </br>
 ```cpp
 	default_random_engine gen;
@@ -57,9 +60,6 @@ III. One of the steps that is necessary during weight update is data association
 	    }
 ```
 </br>
-
-IV. During the prediction stage, we estimate the location (x, y, theta) of the vehicle based on the current measurements (velocity and yaw rate!)
-
 
 </br>
 
