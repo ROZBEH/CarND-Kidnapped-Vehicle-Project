@@ -41,21 +41,22 @@ III. One of the steps that is necessary during weight update is data association
 	
 	default_random_engine gen;
 	normal_distribution<double> dist_x(0, std_pos[0]);
-  normal_distribution<double> dist_y(0, std_pos[1]);
-  normal_distribution<double> dist_theta(0, std_pos[2]);
-  for (int i = 0; i<num_particles;++i) 
-    {
-    	
-		if (fabs(yaw_rate) < 0.00001){
-			particles[i].x += dist_x(gen) + velocity * delta_t*cos(particles[i].theta);
-			particles[i].y += dist_y(gen) + velocity * delta_t*sin(particles[i].theta);
-			particles[i].theta += dist_theta(gen);
-		} else{
-    	particles[i].x += dist_x(gen) + (velocity/yaw_rate)*(sin(particles[i].theta+yaw_rate*delta_t)-sin(particles[i].theta));
-    	particles[i].y += dist_y(gen) + (velocity/yaw_rate)*(cos(particles[i].theta)-cos(particles[i].theta+yaw_rate*delta_t));
-    	particles[i].theta += dist_theta(gen) + yaw_rate*delta_t;
-    		}
-    }
+    normal_distribution<double> dist_y(0, std_pos[1]);
+    normal_distribution<double> dist_theta(0, std_pos[2]);
+	for (int i = 0; i<num_particles;++i) 
+	    {
+	    	
+			if (fabs(yaw_rate) < 0.00001){
+				particles[i].x += dist_x(gen) + velocity * delta_t*cos(particles[i].theta);
+				particles[i].y += dist_y(gen) + velocity * delta_t*sin(particles[i].theta);
+				particles[i].theta += dist_theta(gen);
+			} else{
+	    	particles[i].x += dist_x(gen) + (velocity/yaw_rate)*(sin(particles[i].theta+yaw_rate*delta_t)-sin(particles[i].theta));
+	    	particles[i].y += dist_y(gen) + (velocity/yaw_rate)*(cos(particles[i].theta)-cos(particles[i].theta+yaw_rate*delta_t));
+	    	particles[i].theta += dist_theta(gen) + yaw_rate*delta_t;
+	    		}
+	    }
+	    
 '''
 
 
