@@ -67,7 +67,7 @@ IV. During the prediction stage, we estimate the location (x, y, theta) of the v
 V. Final video of the result is provided below. Please click on the following image to view the full video on YouTube. 
 </br>
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/jh6S3Ta3iMs/0.jpg)](https://www.youtube.com/watch?v=jh6S3Ta3iMs)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/hbE6PVQkkWI/0.jpg)](https://www.youtube.com/watch?v=hbE6PVQkkWI)
 
 </br>
 <br></br>
