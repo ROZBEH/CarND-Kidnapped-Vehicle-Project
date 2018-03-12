@@ -24,7 +24,7 @@ Pipeline
 
 <br>
 
-I. First thing first, initialization of the particles happens. 100 was choosen as the number of particles. Once the number of particles has been choosen we loop through each particl and set the weights for all of them equal to one. After that, we set the x and y location of each particle equal to the sensor data that were return from the simulation. Once the initialization is made, next round we will ignore initialization and go to the prediction stage. Which will be described in section 4.
+I. First thing first, initialization of the particles happens. 100 was choosen as the number of particles. Once the number of particles has been choosen we loop through each particle and set the weights for all of them equal to one. After that, we set the x and y location of each particle equal to the sensor data that were return from the simulation. Once the initialization is made, next round we will ignore initialization and go to the prediction stage. Prediction step will be described in section 4.
 
 
 </br>
