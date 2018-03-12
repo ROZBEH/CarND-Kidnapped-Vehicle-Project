@@ -8,6 +8,7 @@
 
 #ifndef PARTICLE_FILTER_H_
 #define PARTICLE_FILTER_H_
+#include <random>
 
 #include "helper_functions.h"
 
@@ -29,6 +30,7 @@ class ParticleFilter {
 	
 	// Number of particles to draw
 	int num_particles; 
+	std::default_random_engine gen;
 	
 	
 	
