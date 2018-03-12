@@ -1,10 +1,9 @@
-# PID Control Project
+# Kidnapped Vehicle Project
 
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
 
-<!-- ![Alt Text](Gif3.gif) -->
-<!-- <p align="center"><img src="Gif3.gif"></p> -->
+
 <p align="center">
 <img src="https://j.gifs.com/L8DDWg.gif" width = "600" />
 </p>
@@ -14,12 +13,11 @@ Overview
 ---
 
 
-In this project we are going to use Model Predictive controller to steer and accelerate a vehicle in a simulation environment without human intervention. 
+In this project we are going to use Particle Filter for the localization of self driving car.
 
 
 Pipeline
 ---
-
 
 
 *The overall pipeline along with the results will be described here!*
