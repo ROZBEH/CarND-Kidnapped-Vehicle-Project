@@ -1,146 +1,74 @@
-# Overview
-This repository contains all the code needed to complete the final project for the Localization course in Udacity's Self-Driving Car Nanodegree.
+# PID Control Project
 
-#### Submission
-All you will submit is your completed version of `particle_filter.cpp`, which is located in the `src` directory. You should probably do a `git pull` before submitting to verify that your project passes the most up-to-date version of the grading code (there are some parameters in `src/main.cpp` which govern the requirements on accuracy and run time.)
-
-## Project Introduction
-Your robot has been kidnapped and transported to a new location! Luckily it has a map of this location, a (noisy) GPS estimate of its initial location, and lots of (noisy) sensor and control data.
-
-In this project you will implement a 2 dimensional particle filter in C++. Your particle filter will be given a map and some initial localization information (analogous to what a GPS would provide). At each time step your filter will also get observation and control data. 
-
-## Running the Code
-This project involves the Term 2 Simulator which can be downloaded [here](https://github.com/udacity/self-driving-car-sim/releases)
-
-This repository includes two files that can be used to set up and intall uWebSocketIO for either Linux or Mac systems. For windows you can use either Docker, VMware, or even Windows 10 Bash on Ubuntu to install uWebSocketIO.
-
-Once the install for uWebSocketIO is complete, the main program can be built and ran by doing the following from the project top directory.
-
-1. mkdir build
-2. cd build
-3. cmake ..
-4. make
-5. ./particle_filter
-
-Alternatively some scripts have been included to streamline this process, these can be leveraged by executing the following in the top directory of the project:
-
-1. ./clean.sh
-2. ./build.sh
-3. ./run.sh
-
-Tips for setting up your environment can be found [here](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/0949fca6-b379-42af-a919-ee50aa304e6a/lessons/f758c44c-5e40-4e01-93b5-1a82aa4e044f/concepts/23d376c7-0195-4276-bdf0-e02f1f3c665d)
-
-Note that the programs that need to be written to accomplish the project are src/particle_filter.cpp, and particle_filter.h
-
-The program main.cpp has already been filled out, but feel free to modify it.
-
-Here is the main protcol that main.cpp uses for uWebSocketIO in communicating with the simulator.
-
-INPUT: values provided by the simulator to the c++ program
-
-// sense noisy position data from the simulator
-
-["sense_x"] 
-
-["sense_y"] 
-
-["sense_theta"] 
-
-// get the previous velocity and yaw rate to predict the particle's transitioned state
-
-["previous_velocity"]
-
-["previous_yawrate"]
-
-// receive noisy observation data from the simulator, in a respective list of x/y values
-
-["sense_observations_x"] 
-
-["sense_observations_y"] 
+[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
 
-OUTPUT: values provided by the c++ program to the simulator
-
-// best particle values used for calculating the error evaluation
-
-["best_particle_x"]
-
-["best_particle_y"]
-
-["best_particle_theta"] 
-
-//Optional message data used for debugging particle's sensing and associations
-
-// for respective (x,y) sensed positions ID label 
-
-["best_particle_associations"]
-
-// for respective (x,y) sensed positions
-
-["best_particle_sense_x"] <= list of sensed x positions
-
-["best_particle_sense_y"] <= list of sensed y positions
+<!-- ![Alt Text](Gif3.gif) -->
+<p align="center"><img src="Gif3.gif"></p>
 
 
-Your job is to build out the methods in `particle_filter.cpp` until the simulator output says:
-
-```
-Success! Your particle filter passed!
-```
-
-# Implementing the Particle Filter
-The directory structure of this repository is as follows:
-
-```
-root
-|   build.sh
-|   clean.sh
-|   CMakeLists.txt
-|   README.md
-|   run.sh
-|
-|___data
-|   |   
-|   |   map_data.txt
-|   
-|   
-|___src
-    |   helper_functions.h
-    |   main.cpp
-    |   map.h
-    |   particle_filter.cpp
-    |   particle_filter.h
-```
-
-The only file you should modify is `particle_filter.cpp` in the `src` directory. The file contains the scaffolding of a `ParticleFilter` class and some associated methods. Read through the code, the comments, and the header file `particle_filter.h` to get a sense for what this code is expected to do.
-
-If you are interested, take a look at `src/main.cpp` as well. This file contains the code that will actually be running your particle filter and calling the associated methods.
-
-## Inputs to the Particle Filter
-You can find the inputs to the particle filter in the `data` directory. 
-
-#### The Map*
-`map_data.txt` includes the position of landmarks (in meters) on an arbitrary Cartesian coordinate system. Each row has three columns
-1. x position
-2. y position
-3. landmark id
-
-### All other data the simulator provides, such as observations and controls.
-
-> * Map data provided by 3D Mapping Solutions GmbH.
-
-## Success Criteria
-If your particle filter passes the current grading code in the simulator (you can make sure you have the current version at any time by doing a `git pull`), then you should pass! 
-
-The things the grading code is looking for are:
+Overview
+---
 
 
-1. **Accuracy**: your particle filter should localize vehicle position and yaw to within the values specified in the parameters `max_translation_error` and `max_yaw_error` in `src/main.cpp`.
+In this project we are going to use Model Predictive controller to steer and accelerate a vehicle in a simulation environment without human intervention. 
 
-2. **Performance**: your particle filter should complete execution within the time of 100 seconds.
 
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+Pipeline
+---
 
 
 
+*The overall pipeline along with the results will be described here!*
+
+<br>
+
+I. The following image shows the overall block diagram of the underlying algorithm. Model Predictive Control (MPC) uses control inputs that minimizes the cost function. Before starting the MPC algorithm we set up duration of the trajectory, this means setting up N and dt. We talk about choosing appropriate N and dt in the next section. Once we choose N and dt, we define vehicle model and constraints as shown in the following diagram. We have two types of constraints, one type is the actuator limitations delta(steering angle) and a(acceleration or brake). The other constraint is the model equation itself, as an example constraint on x is shown in the following equation. Next step is defining the cost function. I will talk about cost function in detail in the following sections. Once we set up all these variable, we begin the state feedback loop. First we pass the current state to the MPC solver. The model uses initial state, model, constraints, and cost function to return a vector of control inputs that minimizes the cost function. We just pick the first control input to the vehicle and discard all others. We repeat the loop.
+
+
+</br>
+<p align="center"><img src="Image_.png"></p>
+</br>
+II. Also the following equation shows an example of enforcing the constraint. This is for vehicle x location. We do the same for other equations in our model.
+</br>
+</br>
+<p align="center"><img src="Constraint.png" width="50%"></p>
+
+
+III. There are 7 types of cost functions that we defined here. Cost functions include a) cross track error b) orientation of the vehicle c) deviation from the refrence speed(60) d) Steering Value e) Acceleration f) Differential Steering g) Differential Acceleration. The trickiest part of this project was choosing the right coefficient for each of the 7 cost functions. For example cost coefficient for the Differential Steering was very important for the vehicle to steer correctly around the curb.
+
+
+</br>
+
+
+IV. Values for dt and N are chosen empirically. First I started with the values that I used them in the course quize N = 25 and dt = 0.05. However, it seemed this value for dt is very low and the vehicle became very unstable specially the steering angle. By changing dt to 0.1, steering angle became less sensitive to temporal changes and as a result vehicle became more stable. I tweaked with different values of N as well and it seems N = 20 works the best. This means that the vehicles knows the next 2 seconds of it's state. Given the curves of this route, it is a reasonable value.
+
+
+</br>
+
+V. Before passing the waypoints to the solver, a polynomial is used to fit the updated vehcile location. Given the global x,y positions of the waypoints and global x,y position of the vehicle, vehicle coordinate gets updated. The updated points are used to fit a polynomial to the vehicle path in order to calculate orientation(epsi) and cross track error(cte). Cte and epsi are used to calculate the current state of the vehivle as shown in the follwing code snippet.
+
+```cpp
+const double dt = 0.1;
+const double Lf = 2.67;
+double px_est = 0.0 + v * dt;
+const double py_est = 0.0;
+double psi_est = 0.0 + v * -steering / Lf * dt;
+double v_est = v + throt * dt;
+double cte_est = cte + v * sin(epsi) * dt;
+double epsi_est = epsi + v * -steering / Lf * dt;
+``` 
+
+
+</br>
+
+VI. Latency of 100 microsecond is considered. Before passing the states to the solver, all the states are getting updated based on the latency of 0.1 second. For example the next cross track error becomes cte + v * sin(epsi) * dt in which dt is the latency of 0.1 second. 
+
+
+VII. Final video of the result is provided below. Please click on the following image to view the full video on YouTube. 
+</br>
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/jh6S3Ta3iMs/0.jpg)](https://www.youtube.com/watch?v=jh6S3Ta3iMs)
+
+</br>
+<br></br>
